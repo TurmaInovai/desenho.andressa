@@ -10,6 +10,88 @@ const STAT_DECAY = 4; // Decay amount
 let decayInterval;
 let isSleeping = false;
 let isAnimating = false;
+let isMusicPlaying = false;
+
+function toggleMusic() {
+    const music = document.getElementById('bg-music');
+    const btn = document.getElementById('music-btn');
+    if (isMusicPlaying) {
+        music.pause();
+        btn.innerText = '🔇';
+        isMusicPlaying = false;
+    } else {
+        music.play().catch(e => console.log('Bloqueado pelo navegador:', e));
+        btn.innerText = '🎵';
+        isMusicPlaying = true;
+    }
+}
+
+let recognition;
+let isListening = false;
+
+function toggleMicrophone() {
+    if (!('webkitSpeechRecognition' in window)) {
+        alert('Seu navegador não suporta reconhecimento de voz.');
+        return;
+    }
+    
+    if (isListening) {
+        recognition.stop();
+        return;
+    }
+
+    if (!recognition) {
+        recognition = new webkitSpeechRecognition();
+        recognition.lang = 'pt-BR';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = function() {
+            isListening = true;
+            document.getElementById('mic-btn').innerText = '🛑 Parar de Ouvir';
+            showEffect('🎤');
+            document.getElementById('pet-img').src = 'hello_kitty_mic.png'; // Modo microfone
+        };
+
+        recognition.onresult = function(event) {
+            const speechResult = event.results[0][0].transcript;
+            repeatWords(speechResult);
+        };
+
+        recognition.onend = function() {
+            isListening = false;
+            document.getElementById('mic-btn').innerText = '🎤 Repetir Voz';
+            // Voltar para img normal (que está sorrindo)
+            document.getElementById('pet-img').src = 'hello_kitty.png';
+        };
+
+        recognition.onerror = function(event) {
+            console.error("Speech recognition error", event.error);
+        };
+    }
+
+    recognition.start();
+}
+
+function repeatWords(text) {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'pt-BR';
+    utterance.pitch = 1.7; // Voz fininha de gatinha
+    utterance.rate = 1.1;
+    synth.speak(utterance);
+    
+    // Animar a gata falando
+    if(!isAnimating && !isSleeping) {
+        isAnimating = true;
+        const petImg = document.getElementById('pet-img');
+        petImg.className = 'animate-jump';
+        setTimeout(() => {
+            petImg.className = '';
+            isAnimating = false;
+        }, 2500); 
+    }
+}
 
 function updateBars() {
     Object.keys(stats).forEach(key => {
