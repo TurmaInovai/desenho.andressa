@@ -9,15 +9,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Áudio de fundo -->
-    <audio id="bg-music" loop>
-        <!-- Aviso: O arquivo veigh_bolsa_de_ombro.mp3 tem que ser colocado na mesma pasta -->
-        <source src="veigh_bolsa_de_ombro.mp3" type="audio/mpeg">
-    </audio>
-
     <div id="game-container" class="scene-living-room">
-        <header style="position: relative;">
-            <button id="music-btn" onclick="toggleMusic()" style="position: absolute; right: 10px; top: -5px; background: none; border: none; font-size: 24px; cursor: pointer; z-index: 100;" title="Tocar Música">🔇</button>
+        <header>
             <div class="stat">
                 <label>Fome</label>
                 <div class="bar-bg"><div class="bar-fill" id="fome-bar"></div></div>
@@ -52,7 +45,6 @@
 
             <div id="play-panel" class="actions-panel hidden">
                 <button class="action-btn play-btn" onclick="playWithPet()">🎾 Jogar Bolinha</button>
-                <button class="action-btn mic-btn" id="mic-btn" onclick="toggleMicrophone()">🎤 Repetir Voz</button>
             </div>
             <div id="bath-panel" class="actions-panel hidden">
                 <button class="action-btn bath-btn" onclick="bathePet()">🛁 Dar Banho</button>

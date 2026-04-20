@@ -10,17 +10,14 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Quicksand', sans-serif;
-    /* Cenário azul com rosa (Global/outside) */
-    background: linear-gradient(135deg, #a1c4fd 0%, #ffc0cb 100%);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    /* Cenário rosa com bolinhas brancas (Global/outside) */
+    background-color: #ffc0cb; 
+    background-image: 
+        radial-gradient(#ffffff 20%, transparent 20%), 
+        radial-gradient(#ffffff 20%, transparent 20%);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
     overflow: hidden;
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 #game-container {
@@ -259,11 +256,6 @@ footer {
 /* =========================================
    SCENES
    ========================================= */
-
-.scene-living-room {
-    /* Cenário azul com rosa na sala */
-    background: linear-gradient(135deg, rgba(135, 206, 235, 0.6), rgba(255, 182, 193, 0.6)) !important;
-}
 
 /* Cozinha: Branca com bolinhas rosa */
 .scene-kitchen {
